@@ -1,0 +1,36 @@
+import random
+import matplotlib.pyplot as plt
+
+# Parameter
+total_peserta = 100  # Total peserta
+jumlah_pemenang = 10  # Jumlah pemenang
+hadiah = ['Hadiah Utama', 'Hadiah Hiburan', 'Hadiah Keberuntungan']  # Jenis hadiah
+
+# Fungsi untuk membagikan hadiah secara acak
+def bagi_hadiah(total_peserta, jumlah_pemenang):
+    # Menghasilkan nomor acak untuk pemenang
+    pemenang = random.sample(range(1, total_peserta+1), jumlah_pemenang)
+    return pemenang
+
+# Fungsi untuk memberikan hadiah berdasarkan nomor pemenang
+def alokasikan_hadiah(pemenang, hadiah):
+    # Mengalokasikan hadiah secara acak untuk setiap pemenang
+    hadiah_untuk_pemenang = random.choices(hadiah, k=len(pemenang))
+    return dict(zip(pemenang, hadiah_untuk_pemenang))
+
+# Menentukan pemenang dan hadiah mereka
+pemenang = bagi_hadiah(total_peserta, jumlah_pemenang)
+hadiah_pemenang = alokasikan_hadiah(pemenang, hadiah)
+
+# Menampilkan hasil
+print("Pemenang dan Hadiah:")
+for p, h in hadiah_pemenang.items():
+    print(f"Peserta {p} mendapat {h}")
+
+# Grafik distribusi hadiah
+hadiah_count = {h: list(hadiah_pemenang.values()).count(h) for h in hadiah}
+plt.bar(hadiah_count.keys(), hadiah_count.values())
+plt.xlabel('Jenis Hadiah')
+plt.ylabel('Jumlah Pemenang')
+plt.title('Distribusi Hadiah Pemenang')
+plt.show()
